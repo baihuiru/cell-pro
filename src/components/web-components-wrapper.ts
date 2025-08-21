@@ -1,4 +1,5 @@
-import { defineCustomElement, h, Component } from 'vue'
+import { defineCustomElement, h } from 'vue'
+import type { Component } from 'vue'
 
 // Web Components 包装器，确保 Ant Design 组件正确渲染
 export function createWebComponentWrapper(

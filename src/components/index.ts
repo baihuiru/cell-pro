@@ -6,6 +6,9 @@ import StyleProvider from './StyleProvider.vue'
 // Ant Design Vue 组件导入
 import { Button, ConfigProvider } from 'ant-design-vue'
 
+// 导入 Ant Design Vue 样式
+import 'ant-design-vue/dist/reset.css'
+
 // Web Components导入
 import { registerWebComponents } from './web-components'
 

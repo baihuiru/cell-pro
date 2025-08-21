@@ -1,5 +1,8 @@
 /* cell-pro 全局样式隔离配置 */
 
+/* 导入 Ant Design Vue 基础样式 */
+@import 'ant-design-vue/dist/reset.css';
+
 /* 为所有 cell-pro 组件提供统一的样式前缀 */
 .cell-pro {
   /* 确保样式作用域 */

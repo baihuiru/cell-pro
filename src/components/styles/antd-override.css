@@ -1,0 +1,133 @@
+/* Ant Design Vue 样式覆盖和隔离 */
+
+/* 导入 Ant Design Vue 基础样式 */
+@import 'ant-design-vue/dist/reset.css';
+
+/* 为 cell-pro 前缀的 Ant Design Vue 组件提供样式 */
+.cell-pro .ant-btn {
+  /* 按钮基础样式 */
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.cell-pro .ant-btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.cell-pro .ant-btn-primary:hover {
+  color: #fff;
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.cell-pro .ant-btn-ghost {
+  color: #6c757d;
+  background-color: transparent;
+  border-color: #6c757d;
+}
+
+.cell-pro .ant-btn-ghost:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.cell-pro .ant-btn-dashed {
+  color: #6c757d;
+  background-color: transparent;
+  border-color: #6c757d;
+  border-style: dashed;
+}
+
+.cell-pro .ant-btn-dashed:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.cell-pro .ant-btn-link {
+  color: #007bff;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.cell-pro .ant-btn-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.cell-pro .ant-btn-text {
+  color: #6c757d;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.cell-pro .ant-btn-text:hover {
+  color: #495057;
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.cell-pro .ant-btn-default {
+  color: #6c757d;
+  background-color: #fff;
+  border-color: #6c757d;
+}
+
+.cell-pro .ant-btn-default:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+/* 按钮尺寸 */
+.cell-pro .ant-btn-lg {
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border-radius: 0.3rem;
+}
+
+.cell-pro .ant-btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+}
+
+/* 禁用状态 */
+.cell-pro .ant-btn[disabled],
+.cell-pro .ant-btn.disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* 加载状态 */
+.cell-pro .ant-btn-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.cell-pro .ant-btn-loading::before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  z-index: 1;
+  display: block;
+  background: #fff;
+  border-radius: inherit;
+  opacity: 0.35;
+  transition: opacity 0.2s;
+  content: '';
+}

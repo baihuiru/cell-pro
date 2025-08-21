@@ -363,6 +363,111 @@ export default {
 **验证方法**：
 构建完成后，检查 `dist` 目录中的文件，确保没有 `a-button` 字符串，而是正确的 `Button` 组件引用。
 
+### 5. 样式缺失问题
+
+**问题描述**：组件渲染正常，但样式没有显示，按钮看起来像原生 HTML 按钮。
+
+**原因分析**：
+- Ant Design Vue 的 CSS 样式没有被正确包含在构建中
+- 样式导入路径不正确
+- CSS 内联插件没有正确处理样式文件
+
+**解决方案**：
+
+1. **创建样式覆盖文件**：
+```css
+/* src/components/styles/antd-override.css */
+@import 'ant-design-vue/dist/reset.css';
+
+.cell-pro .ant-btn {
+  /* 按钮基础样式 */
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  /* ... 其他样式 */
+}
+```
+
+2. **在 StyleProvider 中导入样式**：
+```vue
+<script setup>
+import { ConfigProvider } from 'ant-design-vue'
+import './styles/antd-override.css'
+import './styles/global.css'
+</script>
+```
+
+3. **确保构建配置正确**：
+```typescript
+// vite.config.components.ts
+export default defineConfig({
+  plugins: [cssInjectedByJsPlugin()],
+  build: {
+    cssCodeSplit: false, // 确保样式内联
+  }
+})
+```
+
+**验证方法**：
+构建完成后，检查 `dist` 目录中的文件是否包含样式内容，文件大小应该比之前有所增加。
+
+### 6. a-button 组件无法解析
+
+**问题描述**：构建后 `a-button` 标签仍然存在，没有被正确解析为 `Button` 组件。
+
+**原因分析**：
+- 在 Vue 模板中使用了 `a-button` 标签名而不是 `Button` 组件引用
+- 构建配置没有正确处理 Ant Design Vue 组件的引用
+
+**解决方案**：
+
+1. **修改组件实现**：
+```vue
+<!-- 修改前 -->
+<template>
+  <a-button type="primary">按钮</a-button>
+</template>
+
+<!-- 修改后 -->
+<template>
+  <Button type="primary">按钮</Button>
+</template>
+
+<script setup>
+import { Button } from 'ant-design-vue'
+</script>
+```
+
+2. **更新构建配置**：
+```typescript
+// vite.config.components.ts
+export default defineConfig({
+  optimizeDeps: {
+    include: ['ant-design-vue', '@ant-design/icons-vue']
+  }
+})
+```
+
+3. **确保组件正确导出**：
+```typescript
+// src/components/index.ts
+export { Button, ConfigProvider } from 'ant-design-vue'
+```
+
+4. **更新组件注册**：
+```typescript
+// src/components/install.ts
+export default {
+  install(app: App) {
+    app.component('Button', Button)
+    app.component('ConfigProvider', ConfigProvider)
+  }
+}
+```
+
+**验证方法**：
+构建完成后，检查 `dist` 目录中的文件，确保没有 `a-button` 字符串，而是正确的 `Button` 组件引用。
+
 ## 总结
 
 Cell Pro 的样式隔离策略确保了：

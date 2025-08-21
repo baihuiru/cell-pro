@@ -39,5 +39,12 @@ export default defineConfig({
     },
     optimizeDeps: {
         include: ['ant-design-vue', '@ant-design/icons-vue']
+    },
+    css: {
+        preprocessorOptions: {
+            css: {
+                additionalData: `@import "ant-design-vue/dist/reset.css";`
+            }
+        }
     }
 })

@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { ConfigProvider } from 'ant-design-vue'
+import './styles/antd-override.css'
 import './styles/global.css'
 
 // 定义组件属性

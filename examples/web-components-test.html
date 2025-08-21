@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Pro Web Components 测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #1890ff;
+        }
+        .component-demo {
+            margin: 16px 0;
+            padding: 16px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+        .status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        .status.success {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            color: #52c41a;
+        }
+        .status.error {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            color: #ff4d4f;
+        }
+        .status.info {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            color: #1890ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Cell Pro Web Components 测试</h1>
+        <p>这个页面用于测试 Web Components 中的 Ant Design 组件是否正确渲染</p>
+
+        <div class="test-section">
+            <h3>1. ShareButton 组件测试</h3>
+            <div class="component-demo">
+                <share-button text="https://example.com" button-text="复制链接"></share-button>
+            </div>
+            <div class="status info">
+                预期：应该显示一个 Ant Design 样式的按钮，点击后能复制链接
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. HelpLink 组件测试</h3>
+            <div class="component-demo">
+                <help-link text="帮助文档" href="https://docs.example.com" icon-type="book"></help-link>
+            </div>
+            <div class="status info">
+                预期：应该显示一个帮助链接，使用 Ant Design 的样式
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 组件状态检查</h3>
+            <div id="status-check"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 控制台检查</h3>
+            <div class="status info">
+                请打开浏览器控制台，检查是否有错误信息，特别是关于组件渲染的错误
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入构建后的组件库 -->
+    <script type="module">
+        // 动态导入组件库
+        import('http://localhost:5173/dist/cell-pro.es.js')
+            .then(({ registerWebComponents }) => {
+                console.log('组件库加载成功');
+                
+                // 注册 Web Components
+                registerWebComponents();
+                
+                // 检查组件是否正确注册
+                setTimeout(() => {
+                    const statusCheck = document.getElementById('status-check');
+                    
+                    if (customElements.get('share-button')) {
+                        statusCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ ShareButton 组件注册成功
+                            </div>
+                        `;
+                    } else {
+                        statusCheck.innerHTML += `
+                            <div class="status error">
+                                ❌ ShareButton 组件注册失败
+                            </div>
+                        `;
+                    }
+                    
+                    if (customElements.get('help-link')) {
+                        statusCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ HelpLink 组件注册成功
+                            </div>
+                        `;
+                    } else {
+                        statusCheck.innerHTML += `
+                            <div class="status error">
+                                ❌ HelpLink 组件注册失败
+                            </div>
+                        `;
+                    }
+                    
+                    // 检查组件是否正确渲染
+                    const shareButton = document.querySelector('share-button');
+                    const helpLink = document.querySelector('help-link');
+                    
+                    if (shareButton && shareButton.shadowRoot) {
+                        statusCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ ShareButton 组件渲染成功
+                            </div>
+                        `;
+                    } else if (shareButton) {
+                        statusCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ ShareButton 组件渲染成功（无 Shadow DOM）
+                            </div>
+                        `;
+                    } else {
+                        statusCheck.innerHTML += `
+                            <div class="status error">
+                                ❌ ShareButton 组件渲染失败
+                            </div>
+                        `;
+                    }
+                    
+                    if (helpLink && helpLink.shadowRoot) {
+                        statusCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ HelpLink 组件渲染成功
+                            </div>
+                        `;
+                    } else if (helpLink) {
+                        statusCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ HelpLink 组件渲染成功（无 Shadow DOM）
+                            </div>
+                        `;
+                    } else {
+                        statusCheck.innerHTML += `
+                            <div class="status error">
+                                ❌ HelpLink 组件渲染失败
+                            </div>
+                        `;
+                    }
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('组件库加载失败:', error);
+                document.getElementById('status-check').innerHTML = `
+                    <div class="status error">
+                        ❌ 组件库加载失败: ${error.message}
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>

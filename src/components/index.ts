@@ -1,0 +1,30 @@
+// Vue组件导入
+import ShareButton from './ShareButton.vue'
+import HelpLink from './HelpLink.vue'
+
+// Web Components导入
+import { registerWebComponents } from './web-components'
+
+// Vue插件导入
+import install from './install'
+
+// Vue组件导出
+export { default as ShareButton } from './ShareButton.vue'
+export { default as HelpLink } from './HelpLink.vue'
+
+// Web Components导出
+export { registerWebComponents } from './web-components'
+
+// Vue插件导出
+export { default as install } from './install'
+
+// 类型导出
+export type { ShareButtonElement, HelpLinkElement } from './web-components'
+
+// 默认导出（支持 app.use() 和 import 两种方式）
+export default {
+    ShareButton,
+    HelpLink,
+    registerWebComponents,
+    install
+}

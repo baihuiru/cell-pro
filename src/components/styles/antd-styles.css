@@ -1,4 +1,4 @@
-/* Ant Design Vue 样式系统 */
+/* Ant Design Vue 样式系统 - 简化版本 */
 
 /* 导入 Ant Design Vue 的基础样式 */
 @import 'ant-design-vue/dist/reset.css';
@@ -13,5 +13,8 @@
   color: rgba(0, 0, 0, 0.85);
 }
 
-/* Ant Design Vue 组件样式覆盖 */
+/* 样式隔离 - 确保 cell-pro 前缀的样式优先级 */
+.cell-pro * {
+  box-sizing: border-box;
+}
 

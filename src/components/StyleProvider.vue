@@ -1,5 +1,8 @@
 <template>
-  <ConfigProvider :prefix-cls="prefixCls">
+  <ConfigProvider 
+    :prefix-cls="prefixCls"
+    :theme="themeConfig"
+  >
     <slot />
   </ConfigProvider>
 </template>
@@ -17,6 +20,27 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   prefixCls: 'cell-pro'
 })
+
+// 配置 Ant Design Vue 主题
+const themeConfig = {
+  token: {
+    colorPrimary: '#1677ff',
+    borderRadius: 6,
+    fontSize: 14,
+    lineHeight: 1.5715,
+  },
+  components: {
+    Button: {
+      borderRadius: 6,
+      controlHeight: 32,
+      controlHeightLG: 40,
+      controlHeightSM: 24,
+    },
+    Message: {
+      borderRadius: 6,
+    }
+  }
+}
 </script>
 
 <style scoped>

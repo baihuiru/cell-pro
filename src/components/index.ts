@@ -6,7 +6,10 @@ import StyleProvider from './StyleProvider.vue'
 // Ant Design Vue 组件导入
 import { Button, ConfigProvider } from 'ant-design-vue'
 
-// 导入自定义样式文件，确保样式被打包
+// 导入 Ant Design Vue 样式 - 让 Vite 自动收集和打包
+import 'ant-design-vue/dist/reset.css'
+
+// 导入自定义样式文件
 import './styles/antd-styles.css'
 
 // Ant Design Vue 4.x 使用 CSS-in-JS，不需要导入 CSS 文件

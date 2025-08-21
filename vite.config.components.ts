@@ -8,10 +8,10 @@ export default defineConfig({
     plugins: [
         vue(),
         cssInjectedByJsPlugin({
-            // 确保样式被正确注入
-            topExecutionPriority: false,
+            // 自动收集所有样式
+            jsAssetsFilterFunction: (cssAsset) => true,
             // 支持样式去重
-            jsAssetsFilterFunction: (cssAsset) => true
+            topExecutionPriority: false
         }),
     ],
     build: {
@@ -29,6 +29,7 @@ export default defineConfig({
                     vue: 'Vue'
                 },
                 assetFileNames: (assetInfo) => {
+                    // 处理样式文件，确保被正确收集
                     if (assetInfo.name === 'style.css') return 'style.css'
                     return assetInfo.name || 'asset'
                 }
@@ -36,6 +37,8 @@ export default defineConfig({
         },
         outDir: 'dist',
         cssCodeSplit: false, // 不分割 CSS，确保样式内联
+        // 确保样式被正确处理
+        assetsInlineLimit: 0, // 不内联小文件，让 cssInjectedByJsPlugin 处理
     },
     resolve: {
         alias: {
@@ -48,10 +51,10 @@ export default defineConfig({
     css: {
         // 确保 CSS 被正确处理
         modules: false,
+        // 启用 CSS 预处理
         preprocessorOptions: {
             css: {
-                // 移除这个配置，因为样式已经在 index.ts 中导入了
-                // additionalData: `@import "ant-design-vue/dist/reset.css";`
+                // 移除这个配置，让 Vite 自动处理
             }
         }
     }

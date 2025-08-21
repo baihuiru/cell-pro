@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React + Web Components 示例</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- 引入你的 Web Components 库 -->
+    <script type="module">
+        import { registerWebComponents } from './dist/cell-pro.es.js'
+        registerWebComponents()
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .demo-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .demo-title {
+            color: #333;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>React + Web Components 跨框架组件示例</h1>
+    
+    <div id="react-root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function App() {
+            const [shareUrl, setShareUrl] = useState('https://example.com');
+            const [shareTitle, setShareTitle] = useState('示例页面');
+            
+            const handleShare = (event) => {
+                console.log('分享事件:', event.detail);
+                alert(`分享成功: ${event.detail.url}`);
+            };
+            
+            const handleCopy = (event) => {
+                console.log('复制事件:', event.detail);
+                alert(`链接已复制: ${event.detail.url}`);
+            };
+            
+            const handleHelpClick = (event) => {
+                console.log('帮助链接点击:', event.detail);
+                alert('帮助链接被点击了！');
+            };
+
+            return (
+                <div>
+                    <div className="demo-section">
+                        <h2 className="demo-title">分享按钮组件</h2>
+                        <div>
+                            <label>URL: </label>
+                            <input 
+                                type="text" 
+                                value={shareUrl} 
+                                onChange={(e) => setShareUrl(e.target.value)}
+                                style={{ width: '300px', marginRight: '10px' }}
+                            />
+                        </div>
+                        <div style={{ marginTop: '10px' }}>
+                            <label>标题: </label>
+                            <input 
+                                type="text" 
+                                value={shareTitle} 
+                                onChange={(e) => setShareTitle(e.target.value)}
+                                style={{ width: '200px' }}
+                            />
+                        </div>
+                        <div style={{ marginTop: '20px' }}>
+                            {/* 使用 Web Component */}
+                            <share-button
+                                url={shareUrl}
+                                title={shareTitle}
+                                description="这是一个跨框架的组件示例"
+                                button-text="分享页面"
+                                variant="primary"
+                                size="medium"
+                                onShare={handleShare}
+                                onCopy={handleCopy}
+                                onError={(e) => console.error('分享错误:', e.detail)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="demo-section">
+                        <h2 className="demo-title">帮助链接组件</h2>
+                        <div style={{ marginTop: '20px' }}>
+                            {/* 使用 Web Component */}
+                            <help-link
+                                text="查看帮助文档"
+                                href="https://docs.example.com"
+                                target="_blank"
+                                icon-type="question"
+                                variant="info"
+                                size="medium"
+                                tooltip="点击查看详细帮助信息"
+                                tooltip-position="top"
+                                onClick={handleHelpClick}
+                                onHelp={(e) => console.log('帮助事件:', e.detail)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="demo-section">
+                        <h2 className="demo-title">原生 HTML 中使用</h2>
+                        <p>这些组件也可以在原生 HTML 中使用：</p>
+                        <share-button
+                            url="https://github.com"
+                            title="GitHub"
+                            description="代码托管平台"
+                            button-text="分享 GitHub"
+                            variant="success"
+                            size="small"
+                        />
+                        
+                        <help-link
+                            text="GitHub 帮助"
+                            href="https://help.github.com"
+                            icon-type="info"
+                            variant="warning"
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('react-root'));
+    </script>
+</body>
+</html>

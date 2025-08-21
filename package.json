@@ -1,0 +1,85 @@
+{
+  "name": "cell-pro",
+  "version": "1.0.0",
+  "description": "A Vue 3 component library with Web Components support",
+  "keywords": [
+    "vue",
+    "vue3",
+    "components",
+    "web-components",
+    "ui"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/cell-pro.umd.js",
+  "module": "./dist/cell-pro.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/cell-pro.es.js",
+      "require": "./dist/cell-pro.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "build:components": "vite build --config vite.config.components.ts && node scripts/post-build.cjs",
+    "build:lib": "npm run build:components",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist src/components/index.ts --skipLibCheck",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "prepublishOnly": "npm run build:lib",
+    "publish:script": "node scripts/publish.cjs",
+    "publish:simple": "node scripts/publish-simple.cjs",
+    "publish:shell": "./scripts/publish.sh"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "ant-design-vue": "^4.2.6",
+    "pinia": "^3.0.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.16.5",
+    "@vitejs/plugin-vue": "^4.5.0",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.31.0",
+    "eslint-plugin-vue": "~10.3.0",
+    "jiti": "^2.4.2",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "3.6.2",
+    "typescript": "~5.8.0",
+    "vite": "^4.5.0",
+    "vue": "^3.5.18",
+    "vue-tsc": "^3.0.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/cell-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/cell-pro/issues"
+  },
+  "homepage": "https://github.com/yourusername/cell-pro#readme"
+}

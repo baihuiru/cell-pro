@@ -2,9 +2,18 @@ import { defineCustomElement } from 'vue'
 import ShareButton from './ShareButton.vue'
 import HelpLink from './HelpLink.vue'
 
+// 创建支持样式的 Web Components
+function createStyledCustomElement(component: any) {
+    return defineCustomElement({
+        ...component,
+        shadowRoot: false,  // 不使用 Shadow DOM
+        styles: [],         // 不注入样式
+    })
+}
+
 // 使用 defineCustomElement 将 Vue 组件转换为 Web Components
-const ShareButtonElement = defineCustomElement(ShareButton)
-const HelpLinkElement = defineCustomElement(HelpLink)
+const ShareButtonElement = createStyledCustomElement(ShareButton)
+const HelpLinkElement = createStyledCustomElement(HelpLink)
 
 // 注册 Web Components
 export function registerWebComponents() {

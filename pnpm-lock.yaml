@@ -17,9 +17,6 @@ importers:
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.8.3)(vue@3.5.18(typescript@5.8.3))
-      vue:
-        specifier: ^3.5.18
-        version: 3.5.18(typescript@5.8.3)
     devDependencies:
       '@tsconfig/node22':
         specifier: ^22.0.2
@@ -60,6 +57,9 @@ importers:
       vite:
         specifier: ^4.5.0
         version: 4.5.14(@types/node@22.17.2)
+      vue:
+        specifier: ^3.5.18
+        version: 3.5.18(typescript@5.8.3)
       vue-tsc:
         specifier: ^3.0.4
         version: 3.0.5(typescript@5.8.3)

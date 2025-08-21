@@ -4,34 +4,6 @@
 @import 'ant-design-vue/dist/reset.css';
 
 /* 为所有 cell-pro 组件提供统一的样式前缀 */
-.cell-pro {
-  /* 确保样式作用域 */
-}
-
-/* Ant Design Vue 组件样式前缀覆盖 */
-.cell-pro .ant-btn {
-  /* 按钮样式隔离 */
-}
-
-.cell-pro .ant-message {
-  /* 消息提示样式隔离 */
-}
-
-.cell-pro .ant-modal {
-  /* 弹窗样式隔离 */
-}
-
-.cell-pro .ant-form {
-  /* 表单样式隔离 */
-}
-
-.cell-pro .ant-input {
-  /* 输入框样式隔离 */
-}
-
-.cell-pro .ant-select {
-  /* 选择器样式隔离 */
-}
 
 /* 自定义组件样式前缀 */
 .cell-pro-share-button-container {

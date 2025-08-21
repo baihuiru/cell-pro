@@ -1,0 +1,62 @@
+/* cell-pro 全局样式隔离配置 */
+
+/* 为所有 cell-pro 组件提供统一的样式前缀 */
+.cell-pro {
+  /* 确保样式作用域 */
+}
+
+/* Ant Design Vue 组件样式前缀覆盖 */
+.cell-pro .ant-btn {
+  /* 按钮样式隔离 */
+}
+
+.cell-pro .ant-message {
+  /* 消息提示样式隔离 */
+}
+
+.cell-pro .ant-modal {
+  /* 弹窗样式隔离 */
+}
+
+.cell-pro .ant-form {
+  /* 表单样式隔离 */
+}
+
+.cell-pro .ant-input {
+  /* 输入框样式隔离 */
+}
+
+.cell-pro .ant-select {
+  /* 选择器样式隔离 */
+}
+
+/* 自定义组件样式前缀 */
+.cell-pro-share-button-container {
+  /* ShareButton 容器样式 */
+}
+
+.cell-pro-help-link-container {
+  /* HelpLink 容器样式 */
+}
+
+/* 工具类 */
+.cell-pro-hidden {
+  display: none !important;
+}
+
+.cell-pro-visible {
+  display: block !important;
+}
+
+/* 响应式工具类 */
+@media (max-width: 768px) {
+  .cell-pro-mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .cell-pro-desktop-hidden {
+    display: none !important;
+  }
+}

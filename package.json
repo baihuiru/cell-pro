@@ -42,6 +42,7 @@
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
     "prepublishOnly": "npm run build:lib",
+    "build:auto": "node scripts/auto-build-version.cjs",
     "publish:script": "node scripts/publish.cjs",
     "publish:simple": "node scripts/publish-simple.cjs",
     "publish:shell": "./scripts/publish.sh"
@@ -68,6 +69,7 @@
     "prettier": "3.6.2",
     "typescript": "~5.8.0",
     "vite": "^4.5.0",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
     "vue": "^3.5.18",
     "vue-tsc": "^3.0.4"
   },

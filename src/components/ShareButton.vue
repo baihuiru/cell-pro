@@ -1,25 +1,28 @@
 <template>
-  <div class="copy-button-container">
-    <a-button :type="variant" :size="size" :disabled="disabled || loading" @click="handleCopy">
-      <template #icon>
-        <LoadingOutlined v-if="loading" />
-        <CopyOutlined v-else />
-      </template>
-      {{ buttonText }}
-    </a-button>
+  <StyleProvider>
+    <div class="cell-pro-share-button-container">
+      <a-button :type="variant" :size="size" :disabled="disabled || loading" @click="handleCopy">
+        <template #icon>
+          <LoadingOutlined v-if="loading" />
+          <CopyOutlined v-else />
+        </template>
+        {{ buttonText }}
+      </a-button>
 
-    <a-message
-      v-model:open="showMessage"
-      :type="messageType"
-      :content="messageContent"
-      :duration="3"
-    />
-  </div>
+      <a-message
+        v-model:open="showMessage"
+        :type="messageType"
+        :content="messageContent"
+        :duration="3"
+      />
+    </div>
+  </StyleProvider>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { CopyOutlined, LoadingOutlined } from '@ant-design/icons-vue'
+import StyleProvider from './StyleProvider.vue'
 
 interface Props {
   text?: string
@@ -101,7 +104,12 @@ const showErrorMessage = (content: string) => {
 </script>
 
 <style scoped>
-.copy-button-container {
+.cell-pro-share-button-container {
   display: inline-block;
+}
+
+/* 使用 cell-pro 前缀的样式隔离 */
+:deep(.cell-pro) {
+  /* 确保 Ant Design 组件样式作用域 */
 }
 </style>

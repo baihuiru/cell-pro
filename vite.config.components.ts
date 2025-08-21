@@ -1,10 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [
+        vue(),
+        cssInjectedByJsPlugin(), // CSS 内联插件
+    ],
     build: {
         lib: {
             entry: resolve(__dirname, 'src/components/index.ts'),
@@ -26,7 +30,7 @@ export default defineConfig({
             }
         },
         outDir: 'dist',
-        cssCodeSplit: false
+        cssCodeSplit: false, // 不分割 CSS，确保样式内联
     },
     resolve: {
         alias: {

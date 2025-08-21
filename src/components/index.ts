@@ -1,6 +1,7 @@
 // Vue组件导入
 import ShareButton from './ShareButton.vue'
 import HelpLink from './HelpLink.vue'
+import StyleProvider from './StyleProvider.vue'
 
 // Web Components导入
 import { registerWebComponents } from './web-components'
@@ -11,6 +12,7 @@ import install from './install'
 // Vue组件导出
 export { default as ShareButton } from './ShareButton.vue'
 export { default as HelpLink } from './HelpLink.vue'
+export { default as StyleProvider } from './StyleProvider.vue'
 
 // Web Components导出
 export { registerWebComponents } from './web-components'
@@ -25,6 +27,7 @@ export type { ShareButtonElement, HelpLinkElement } from './web-components'
 export default {
     ShareButton,
     HelpLink,
+    StyleProvider,
     registerWebComponents,
     install
 }

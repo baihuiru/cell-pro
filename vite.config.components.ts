@@ -7,7 +7,12 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 export default defineConfig({
     plugins: [
         vue(),
-        cssInjectedByJsPlugin(), // CSS 内联插件
+        cssInjectedByJsPlugin({
+            // 确保样式被正确注入
+            topExecutionPriority: false,
+            // 支持样式去重
+            jsAssetsFilterFunction: (cssAsset) => true
+        }),
     ],
     build: {
         lib: {
@@ -41,9 +46,12 @@ export default defineConfig({
         include: ['ant-design-vue', '@ant-design/icons-vue']
     },
     css: {
+        // 确保 CSS 被正确处理
+        modules: false,
         preprocessorOptions: {
             css: {
-                additionalData: `@import "ant-design-vue/dist/reset.css";`
+                // 移除这个配置，因为样式已经在 index.ts 中导入了
+                // additionalData: `@import "ant-design-vue/dist/reset.css";`
             }
         }
     }

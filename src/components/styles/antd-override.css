@@ -1,7 +1,6 @@
 /* Ant Design Vue 样式覆盖和隔离 */
 
-/* 导入 Ant Design Vue 基础样式 */
-@import 'ant-design-vue/dist/reset.css';
+/* 注意：Ant Design Vue 的基础样式已在 index.ts 中导入 */
 
 /* 为 cell-pro 前缀的 Ant Design Vue 组件提供样式 */
 .cell-pro .ant-btn {

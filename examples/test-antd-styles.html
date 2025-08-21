@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ant Design Vue 样式测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #1677ff;
+        }
+        .button-group {
+            margin: 10px 0;
+        }
+        .button-group button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Ant Design Vue 样式测试</h1>
+        <p>这个页面测试 Ant Design Vue 的样式是否被正确打包和加载。</p>
+
+        <div class="test-section">
+            <h3>按钮样式测试</h3>
+            <div class="button-group">
+                <button class="cell-pro ant-btn ant-btn-primary">主要按钮</button>
+                <button class="cell-pro ant-btn ant-btn-default">默认按钮</button>
+                <button class="cell-pro ant-btn ant-btn-dashed">虚线按钮</button>
+                <button class="cell-pro ant-btn ant-btn-text">文本按钮</button>
+                <button class="cell-pro ant-btn ant-btn-link">链接按钮</button>
+            </div>
+            
+            <div class="button-group">
+                <button class="cell-pro ant-btn ant-btn-primary ant-btn-lg">大按钮</button>
+                <button class="cell-pro ant-btn ant-btn-primary">默认尺寸</button>
+                <button class="cell-pro ant-btn ant-btn-primary ant-btn-sm">小按钮</button>
+            </div>
+            
+            <div class="button-group">
+                <button class="cell-pro ant-btn ant-btn-primary" disabled>禁用按钮</button>
+                <button class="cell-pro ant-btn ant-btn-primary ant-btn-loading">加载中</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>按钮组测试</h3>
+            <div class="cell-pro ant-btn-group">
+                <button class="cell-pro ant-btn ant-btn-default">左</button>
+                <button class="cell-pro ant-btn ant-btn-default">中</button>
+                <button class="cell-pro ant-btn ant-btn-default">右</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>图标按钮测试</h3>
+            <div class="button-group">
+                <button class="cell-pro ant-btn ant-btn-icon-only ant-btn-primary">🔍</button>
+                <button class="cell-pro ant-btn ant-btn-icon-only ant-btn-default">⚙️</button>
+                <button class="cell-pro ant-btn ant-btn-icon-only ant-btn-dashed">📁</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>样式隔离测试</h3>
+            <p>下面的按钮应该使用 cell-pro 前缀的样式：</p>
+            <button class="cell-pro ant-btn ant-btn-primary">cell-pro 样式按钮</button>
+            
+            <p>下面的按钮应该使用默认样式：</p>
+            <button class="ant-btn ant-btn-primary">默认样式按钮</button>
+        </div>
+    </div>
+
+    <script type="module">
+        // 导入构建后的组件库
+        import { registerWebComponents } from '../dist/cell-pro.es.js';
+        
+        // 注册 Web Components
+        registerWebComponents();
+        
+        console.log('组件库加载完成！');
+    </script>
+</body>
+</html>

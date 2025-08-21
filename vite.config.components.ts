@@ -36,5 +36,8 @@ export default defineConfig({
         alias: {
             '@': resolve(__dirname, 'src')
         }
+    },
+    optimizeDeps: {
+        include: ['ant-design-vue', '@ant-design/icons-vue']
     }
 })

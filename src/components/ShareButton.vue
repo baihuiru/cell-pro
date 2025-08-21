@@ -1,26 +1,20 @@
 <template>
   <StyleProvider>
     <div class="cell-pro-share-button-container">
-      <a-button :type="variant" :size="size" :disabled="disabled || loading" @click="handleCopy">
+      <Button :type="variant" :size="size" :disabled="disabled || loading" @click="handleCopy">
         <template #icon>
           <LoadingOutlined v-if="loading" />
           <CopyOutlined v-else />
         </template>
         {{ buttonText }}
-      </a-button>
-
-      <a-message
-        v-model:open="showMessage"
-        :type="messageType"
-        :content="messageContent"
-        :duration="3"
-      />
+      </Button>
     </div>
   </StyleProvider>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Button, message } from 'ant-design-vue'
 import { CopyOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 import StyleProvider from './StyleProvider.vue'
 
@@ -46,9 +40,6 @@ const emit = defineEmits<{
 }>()
 
 const loading = ref(false)
-const showMessage = ref(false)
-const messageType = ref<'success' | 'error' | 'info'>('info')
-const messageContent = ref('')
 
 const handleCopy = async () => {
   if (props.disabled || loading.value) return
@@ -57,11 +48,11 @@ const handleCopy = async () => {
 
   try {
     await copyToClipboard(props.text)
-    showSuccessMessage('复制成功')
+    message.success('复制成功')
     emit('copy', props.text)
   } catch (error) {
     console.error('复制失败:', error)
-    showErrorMessage('复制失败，请重试')
+    message.error('复制失败，请重试')
     emit('error', error as Error)
   } finally {
     loading.value = false
@@ -88,18 +79,6 @@ const copyToClipboard = async (text: string) => {
   } catch (error) {
     throw new Error('复制失败')
   }
-}
-
-const showSuccessMessage = (content: string) => {
-  messageContent.value = content
-  messageType.value = 'success'
-  showMessage.value = true
-}
-
-const showErrorMessage = (content: string) => {
-  messageContent.value = content
-  messageType.value = 'error'
-  showMessage.value = true
 }
 </script>
 

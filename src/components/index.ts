@@ -3,6 +3,9 @@ import ShareButton from './ShareButton.vue'
 import HelpLink from './HelpLink.vue'
 import StyleProvider from './StyleProvider.vue'
 
+// Ant Design Vue 组件导入
+import { Button, ConfigProvider } from 'ant-design-vue'
+
 // Web Components导入
 import { registerWebComponents } from './web-components'
 
@@ -13,6 +16,9 @@ import install from './install'
 export { default as ShareButton } from './ShareButton.vue'
 export { default as HelpLink } from './HelpLink.vue'
 export { default as StyleProvider } from './StyleProvider.vue'
+
+// Ant Design Vue 组件导出
+export { Button, ConfigProvider }
 
 // Web Components导出
 export { registerWebComponents } from './web-components'
@@ -28,6 +34,8 @@ export default {
     ShareButton,
     HelpLink,
     StyleProvider,
+    Button,
+    ConfigProvider,
     registerWebComponents,
     install
 }

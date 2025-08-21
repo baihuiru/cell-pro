@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button 组件修复测试</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/ant-design-vue@4/dist/antd.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ant-design-vue@4/dist/reset.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Button 组件修复测试</h1>
+        
+        <div style="margin: 20px 0;">
+            <h3>原生 Ant Design Vue Button:</h3>
+            <a-button type="primary">原生按钮</a-button>
+        </div>
+        
+        <div style="margin: 20px 0;">
+            <h3>Cell Pro ShareButton:</h3>
+            <share-button text="测试文本" button-text="复制测试"></share-button>
+        </div>
+        
+        <div style="margin: 20px 0;">
+            <h3>Cell Pro HelpLink:</h3>
+            <help-link text="帮助文档" href="https://example.com"></help-link>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createApp } from 'vue'
+        import { Button, ConfigProvider } from 'ant-design-vue'
+        import CellPro from '../dist/cell-pro.es.js'
+        
+        const app = createApp({
+            template: `
+                <ConfigProvider prefix-cls="cell-pro">
+                    <div>
+                        <h1>Button 组件修复测试</h1>
+                        
+                        <div style="margin: 20px 0;">
+                            <h3>原生 Ant Design Vue Button:</h3>
+                            <Button type="primary">原生按钮</Button>
+                        </div>
+                        
+                        <div style="margin: 20px 0;">
+                            <h3>Cell Pro ShareButton:</h3>
+                            <ShareButton text="测试文本" button-text="复制测试"></ShareButton>
+                        </div>
+                        
+                        <div style="margin: 20px 0;">
+                            <h3>Cell Pro HelpLink:</h3>
+                            <HelpLink text="帮助文档" href="https://example.com"></HelpLink>
+                        </div>
+                    </div>
+                </ConfigProvider>
+            `
+        })
+        
+        // 注册 Ant Design Vue 组件
+        app.use(antd)
+        
+        // 注册 Cell Pro 组件
+        app.use(CellPro)
+        
+        app.mount('#app')
+    </script>
+</body>
+</html>

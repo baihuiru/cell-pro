@@ -7,6 +7,7 @@ Cell Pro 采用了严格的样式隔离策略，参考了 `@yqg/permission` 项�
 1. **CSS 内联**：所有样式打包进 JS，避免外部样式文件依赖
 2. **样式前缀隔离**：所有组件使用 `cell-pro` 前缀
 3. **ConfigProvider 包装**：Ant Design 组件使用统一的前缀配置
+4. **组件引用优化**：使用正确的组件引用而不是标签名
 
 ## 核心组件
 
@@ -82,6 +83,26 @@ export default defineConfig({
 })
 ```
 
+### 4. 组件引用优化
+
+**重要**：在组件中使用 Ant Design Vue 组件时，应该使用正确的组件引用而不是标签名：
+
+```vue
+<!-- 正确方式 -->
+<template>
+  <Button type="primary">按钮</Button>
+</template>
+
+<script setup>
+import { Button } from 'ant-design-vue'
+</script>
+
+<!-- 错误方式 - 会导致构建后无法正确解析 -->
+<template>
+  <a-button type="primary">按钮</a-button>
+</template>
+```
+
 ## 使用方法
 
 ### 1. 自动样式隔离
@@ -103,13 +124,17 @@ export default defineConfig({
 ```vue
 <template>
   <StyleProvider>
-    <a-button type="primary">按钮</a-button>
-    <a-input placeholder="输入框" />
-    <a-select placeholder="选择器">
-      <a-select-option value="1">选项1</a-select-option>
-    </a-select>
+    <Button type="primary">按钮</Button>
+    <Input placeholder="输入框" />
+    <Select placeholder="选择器">
+      <SelectOption value="1">选项1</SelectOption>
+    </Select>
   </StyleProvider>
 </template>
+
+<script setup>
+import { Button, Input, Select, SelectOption } from 'ant-design-vue'
+</script>
 ```
 
 ### 3. 嵌套使用
@@ -218,6 +243,24 @@ Cell Pro 提供了一些工具类：
 }
 ```
 
+### 5. 正确的组件引用方式
+
+```vue
+<!-- 推荐：使用组件引用 -->
+<template>
+  <Button type="primary">按钮</Button>
+</template>
+
+<script setup>
+import { Button } from 'ant-design-vue'
+</script>
+
+<!-- 不推荐：使用标签名 -->
+<template>
+  <a-button type="primary">按钮</a-button>
+</template>
+```
+
 ## 故障排除
 
 ### 1. 样式不生效
@@ -263,6 +306,63 @@ export default defineConfig({
 })
 ```
 
+### 4. a-button 组件无法解析
+
+**问题描述**：构建后 `a-button` 标签仍然存在，没有被正确解析为 `Button` 组件。
+
+**原因分析**：
+- 在 Vue 模板中使用了 `a-button` 标签名而不是 `Button` 组件引用
+- 构建配置没有正确处理 Ant Design Vue 组件的引用
+
+**解决方案**：
+
+1. **修改组件实现**：
+```vue
+<!-- 修改前 -->
+<template>
+  <a-button type="primary">按钮</a-button>
+</template>
+
+<!-- 修改后 -->
+<template>
+  <Button type="primary">按钮</Button>
+</template>
+
+<script setup>
+import { Button } from 'ant-design-vue'
+</script>
+```
+
+2. **更新构建配置**：
+```typescript
+// vite.config.components.ts
+export default defineConfig({
+  optimizeDeps: {
+    include: ['ant-design-vue', '@ant-design/icons-vue']
+  }
+})
+```
+
+3. **确保组件正确导出**：
+```typescript
+// src/components/index.ts
+export { Button, ConfigProvider } from 'ant-design-vue'
+```
+
+4. **更新组件注册**：
+```typescript
+// src/components/install.ts
+export default {
+  install(app: App) {
+    app.component('Button', Button)
+    app.component('ConfigProvider', ConfigProvider)
+  }
+}
+```
+
+**验证方法**：
+构建完成后，检查 `dist` 目录中的文件，确保没有 `a-button` 字符串，而是正确的 `Button` 组件引用。
+
 ## 总结
 
 Cell Pro 的样式隔离策略确保了：
@@ -272,5 +372,6 @@ Cell Pro 的样式隔离策略确保了：
 3. **灵活配置**：支持自定义前缀和主题
 4. **性能优化**：CSS 内联减少 HTTP 请求
 5. **跨框架兼容**：Web Components 支持
+6. **组件引用正确**：使用组件引用而不是标签名，确保构建后正确解析
 
 通过遵循这些指南，你可以构建出样式完全隔离、易于维护的组件库。

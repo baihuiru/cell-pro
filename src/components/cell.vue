@@ -15,7 +15,10 @@
 </template>
 
 <script lang="ts" setup>
-import { Button, ConfigProvider, message } from 'ant-design-vue';
+// 按需引入具体组件，支持Tree Shaking
+import Button from 'ant-design-vue/es/button';
+import ConfigProvider from 'ant-design-vue/es/config-provider';
+import message from 'ant-design-vue/es/message';
 
 // 重置 message 类名，避免被全局样式覆盖
 message.config({ prefixCls: 'cell-pro-message' });

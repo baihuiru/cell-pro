@@ -11,6 +11,18 @@
         "./components": {
             "import": "./dist/components/index.js",
             "require": "./dist/components/index.js"
+        },
+        "./cell-button": {
+            "import": "./dist/cell-button.js",
+            "require": "./dist/cell-button.js"
+        },
+        "./manual-link": {
+            "import": "./dist/manual-link.js",
+            "require": "./dist/manual-link.js"
+        },
+        "./copy-button": {
+            "import": "./dist/copy-button.js",
+            "require": "./dist/copy-button.js"
         }
     },
     "sideEffects": false,

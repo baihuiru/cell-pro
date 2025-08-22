@@ -5,12 +5,12 @@
  * @Last Modified time: Do not edit
  */
 
-import { defineAsyncComponent, defineCustomElement } from 'vue';
+import { defineCustomElement } from 'vue';
 
-// 导入所有组件
-const CellButton = defineAsyncComponent(() => import('../components/cell.vue'));
-const ManualLink = defineAsyncComponent(() => import('../components/manual-link.vue'));
-const CopyButton = defineAsyncComponent(() => import('../components/copy-button.vue'));
+// 按需导入组件
+import CellButton from '../components/cell.vue';
+import ManualLink from '../components/manual-link.vue';
+import CopyButton from '../components/copy-button.vue';
 
 // 组件映射
 const componentMap = {
@@ -41,6 +41,8 @@ interface CellProType {
     components: string[];
     hasInit: boolean;
     init: (options?: Options) => void;
+    registerComponent: (tagName: string) => void;
+    isComponentRegistered: (tagName: string) => boolean;
 }
 
 class CellPro implements CellProType {
@@ -122,3 +124,4 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 // 导出组件和实例
 export default cellPro;
 export { CellButton, ManualLink, CopyButton };
+export { cellPro };

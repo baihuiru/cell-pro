@@ -6,15 +6,11 @@
  */
 import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
-
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+import { resolve } from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        vue(),
-        cssInjectedByJsPlugin()
-    ],
+    plugins: [vue()],
     resolve: {
         alias: {
             '@': '/src',
@@ -29,22 +25,41 @@ export default defineConfig({
         },
     },
     build: {
-		// 把style.css 内联到js文件中
-		cssCodeSplit: false,
+        cssCodeSplit: true, // 启用CSS代码分割
         lib: {
-            entry: 'src/cell-pro/index.ts',
+            entry: {
+                'cell-button': resolve(__dirname, 'src/components/cell.vue'),
+                'manual-link': resolve(__dirname, 'src/components/manual-link.vue'),
+                'copy-button': resolve(__dirname, 'src/components/copy-button.vue'),
+                'components': resolve(__dirname, 'src/cell-pro/components.ts'),
+                index: resolve(__dirname, 'src/cell-pro/index.ts')
+            },
             name: 'cell-pro',
-            fileName: (format) => {
+            fileName: (format, entryName) => {
                 if (format === 'umd') {
-                  return 'cell-pro.umd.js'; // UMD 格式的输出文件名
+                    return `${entryName}.umd.js`;
                 }
-                return 'index.js'; // ESM 格式的输出文件名
+                return `${entryName}.js`;
             },
             formats: ['es', 'umd'],
         },
-
+        rollupOptions: {
+            external: ['vue', 'ant-design-vue'],
+            output: {
+                globals: {
+                    vue: 'Vue',
+                    'ant-design-vue': 'antd'
+                },
+                // 确保每个组件单独打包
+                manualChunks: (id) => {
+                    if (id.includes('cell.vue')) return 'cell-button';
+                    if (id.includes('manual-link.vue')) return 'manual-link';
+                    if (id.includes('copy-button.vue')) return 'copy-button';
+                }
+            }
+        }
     },
     define: {
-        'process.env.NODE_ENV': JSON.stringify('production'), // 手动替换
+        'process.env.NODE_ENV': JSON.stringify('production'),
     },
 });

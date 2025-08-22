@@ -1,3 +1,41 @@
+/*
+ * @Author: huirubai
+ * @Date: 2025-08-22 13:11:51
+ * @Last Modified: huirubai
+ * @Last Modified time: Do not edit
+ */
+
+// 导入组件类型声明
+import './components';
+
+// 主模块声明
+declare module 'cell-pro' {
+  import { DefineComponent } from 'vue';
+  
+  interface CellProInstance {
+    components: string[];
+    hasInit: boolean;
+    init: (options?: { components?: string[] }) => void;
+    registerComponent: (tagName: string) => void;
+    isComponentRegistered: (tagName: string) => boolean;
+  }
+  
+  const cellPro: CellProInstance;
+  
+  // 组件导出
+  const CellButton: DefineComponent<{
+    locale?: string;
+    color?: string;
+  }>;
+  
+  const ManualLink: DefineComponent<{}>;
+  
+  const CopyButton: DefineComponent<{}>;
+  
+  export { CellButton, ManualLink, CopyButton, cellPro };
+  export default cellPro;
+}
+
 declare enum LevelType {
 	L1 = 'L1',
 	L2 = 'L2',

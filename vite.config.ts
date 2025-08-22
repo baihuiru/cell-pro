@@ -42,6 +42,7 @@ export default defineConfig({
             },
             formats: ['es', 'umd'],
         },
+
     },
     define: {
         'process.env.NODE_ENV': JSON.stringify('production'), // 手动替换

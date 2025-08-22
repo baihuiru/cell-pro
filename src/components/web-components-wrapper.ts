@@ -1,3 +1,9 @@
+/*
+ * @Author: huirubai
+ * @Date: 2025-08-21 17:28:42
+ * @Last Modified: huirubai
+ * @Last Modified time: Do not edit
+ */
 import { defineCustomElement, h } from 'vue'
 import type { Component } from 'vue'
 
@@ -12,16 +18,14 @@ export function createWebComponentWrapper(
     } = {}
 ) {
     const {
-        shadowRoot = false,
-        styles = [],
         prefixCls = 'cell-pro'
     } = options
 
     // 创建自定义元素
     const CustomElement = defineCustomElement({
         name: tagName,
-        shadowRoot,
-        styles,
+        shadowRoot: false, // 禁用 Shadow DOM
+        styles: [], // 不使用样式注入
         // 使用 render 函数确保组件正确渲染
         render() {
             // 传递所有属性和插槽

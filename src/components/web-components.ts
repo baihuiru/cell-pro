@@ -9,8 +9,8 @@ export function registerWebComponents() {
             tagName: 'share-button',
             component: ShareButton,
             options: {
-                shadowRoot: false,
-                styles: [],
+                shadowRoot: false, // 完全禁用 Shadow DOM
+                styles: [], // 不使用样式注入
                 prefixCls: 'cell-pro'
             }
         },
@@ -18,8 +18,8 @@ export function registerWebComponents() {
             tagName: 'help-link',
             component: HelpLink,
             options: {
-                shadowRoot: false,
-                styles: [],
+                shadowRoot: false, // 完全禁用 Shadow DOM
+                styles: [], // 不使用样式注入
                 prefixCls: 'cell-pro'
             }
         }

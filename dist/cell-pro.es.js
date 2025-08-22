@@ -7660,27 +7660,27 @@ const qr = /* @__PURE__ */ Ur(yg, [["__scopeId", "data-v-acf4d618"]]), bg = { cl
 const Kr = /* @__PURE__ */ Ur(jg, [["__scopeId", "data-v-0690c573"]]);
 function Hg(e, t, n = {}) {
   const {
-    shadowRoot: r = !1,
-    styles: o = [],
-    prefixCls: a = "cell-pro"
+    prefixCls: r = "cell-pro"
   } = n;
   return wl({
     name: t,
-    shadowRoot: r,
-    styles: o,
+    shadowRoot: !1,
+    // 禁用 Shadow DOM
+    styles: [],
+    // 不使用样式注入
     // 使用 render 函数确保组件正确渲染
     render() {
       return Me(e, {
         ...this.$attrs,
         // 确保样式前缀正确传递
-        prefixCls: this.prefixCls || a
+        prefixCls: this.prefixCls || r
       }, this.$slots);
     },
     // 定义组件属性
     props: {
       prefixCls: {
         type: String,
-        default: a
+        default: r
       }
     }
   });
@@ -7709,7 +7709,9 @@ function zg() {
       component: qr,
       options: {
         shadowRoot: !1,
+        // 完全禁用 Shadow DOM
         styles: [],
+        // 不使用样式注入
         prefixCls: "cell-pro"
       }
     },
@@ -7718,7 +7720,9 @@ function zg() {
       component: Kr,
       options: {
         shadowRoot: !1,
+        // 完全禁用 Shadow DOM
         styles: [],
+        // 不使用样式注入
         prefixCls: "cell-pro"
       }
     }

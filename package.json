@@ -1,6 +1,6 @@
 {
   "name": "cell-pro",
-  "version": "1.0.15",
+  "version": "1.0.18",
   "description": "A Vue 3 component library with Web Components support",
   "keywords": [
     "vue",
@@ -46,9 +46,6 @@
     "publish:script": "node scripts/publish.cjs",
     "publish:simple": "node scripts/publish-simple.cjs",
     "publish:shell": "./scripts/publish.sh"
-  },
-  "peerDependencies": {
-    "vue": "^3.0.0"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",

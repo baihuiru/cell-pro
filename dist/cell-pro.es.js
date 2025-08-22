@@ -7666,8 +7666,7 @@ function Hg(e, t, n = {}) {
     name: t,
     shadowRoot: !1,
     // 禁用 Shadow DOM
-    styles: [],
-    // 不使用样式注入
+    // styles: [], // 不使用样式注入
     // 使用 render 函数确保组件正确渲染
     render() {
       return Me(e, {

@@ -25,7 +25,7 @@ export function createWebComponentWrapper(
     const CustomElement = defineCustomElement({
         name: tagName,
         shadowRoot: false, // 禁用 Shadow DOM
-        styles: [], // 不使用样式注入
+        // styles: [], // 不使用样式注入
         // 使用 render 函数确保组件正确渲染
         render() {
             // 传递所有属性和插槽

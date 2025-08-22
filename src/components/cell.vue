@@ -5,9 +5,9 @@
  @Last Modified time: Do not edit
  -->
 <template>
-	<ConfigProvider prefixCls="cell-pro" :key="locale" :theme="{
+	<ConfigProvider prefixCls="cell-pro" :key="props.locale" :theme="{
 		token: {
-			colorPrimary: color,
+			colorPrimary: props.color,
 		}
 	}">
 		<Button type="primary" @click="onClick">申请</Button>
@@ -15,15 +15,10 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
 import { Button, ConfigProvider, message } from 'ant-design-vue';
 
 // 重置 message 类名，避免被全局样式覆盖
 message.config({ prefixCls: 'cell-pro-message' });
-
-const onClick = () => {
-	console.log('onClick');
-}
 
 const props = defineProps({
 	locale: {
@@ -35,4 +30,8 @@ const props = defineProps({
 		default: '#1677ff'
 	},
 });
+
+const onClick = () => {
+	console.log('onClick');
+}
 </script>

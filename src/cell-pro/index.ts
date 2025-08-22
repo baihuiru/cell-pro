@@ -4,13 +4,14 @@
  * @Last Modified: huirubai
  * @Last Modified time: Do not edit
  */
+
 import { defineAsyncComponent, defineCustomElement } from 'vue';
-const YqgPermissionApply = defineAsyncComponent(() => import('../components/yqg-permission.vue'));
+const CellButton = defineAsyncComponent(() => import('../components/cell.vue'));
 
 const defineElement = (tagName: string): void => {
     customElements.define(
         tagName,
-        defineCustomElement(YqgPermissionApply, {
+        defineCustomElement(CellButton, {
             shadowRoot: false,
             styles: [],
         }),
@@ -21,24 +22,24 @@ interface Options {
     tagName?: string;
 }
 
-interface YqgPermissionType {
+interface CellProType {
     tagName: string;
     hasInit: boolean;
     init: (options: Options) => void;
 }
 
-class YqgPermission implements YqgPermissionType {
+class CellPro implements CellProType {
     tagName: string;
     hasInit: boolean;
 
     constructor() {
-        this.tagName = 'share-button';
+        this.tagName = 'cell-button';
         this.hasInit = false;
     }
 
     init(_options?: Options): void {
         if (!window || !window.customElements) {
-            console.error('yqg-permission is not supported in this environment');
+            console.error('is not supported in this environment');
             return;
         }
         if (this.hasInit) {
@@ -56,15 +57,15 @@ class YqgPermission implements YqgPermissionType {
     };
 }
 
-const yqgPermission = new YqgPermission();
+const cellPro = new CellPro();
 
 
 // 如果DOM已经加载完成，直接执行
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    yqgPermission.init();
+    cellPro.init();
 } else {
     // 否则等待DOM加载完成
-    document.addEventListener('DOMContentLoaded', () => yqgPermission.init());
+    document.addEventListener('DOMContentLoaded', () => cellPro.init());
 }
 
-export default yqgPermission;
+export default cellPro;

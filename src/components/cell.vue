@@ -1,5 +1,11 @@
+<!--
+ @Author: huirubai
+ @Date: 2025-08-22 13:11:51
+ @Last Modified: huirubai
+ @Last Modified time: Do not edit
+ -->
 <template>
-	<ConfigProvider prefixCls="yqg-permission" :key="locale" :theme="{
+	<ConfigProvider prefixCls="cell-pro" :key="locale" :theme="{
 		token: {
 			colorPrimary: color,
 		}
@@ -11,10 +17,9 @@
 <script lang="ts" setup>
 import { watch } from 'vue';
 import { Button, ConfigProvider, message } from 'ant-design-vue';
-import { setLocale } from '../utils';
 
 // 重置 message 类名，避免被全局样式覆盖
-message.config({ prefixCls: 'yqg-permission-message' });
+message.config({ prefixCls: 'cell-pro-message' });
 
 const onClick = () => {
 	console.log('onClick');
@@ -30,9 +35,4 @@ const props = defineProps({
 		default: '#1677ff'
 	},
 });
-
-watch(() => props.locale, (cur, pre) => {
-	if (cur === pre) return;
-	setLocale(cur);
-}, { immediate: true });
 </script>

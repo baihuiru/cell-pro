@@ -32,11 +32,11 @@ export default defineConfig({
 		// 把style.css 内联到js文件中
 		cssCodeSplit: false,
         lib: {
-            entry: 'src/yqg-permission/index.ts',
-            name: 'yqg-permission',
+            entry: 'src/cell-pro/index.ts',
+            name: 'cell-pro',
             fileName: (format) => {
                 if (format === 'umd') {
-                  return 'yqg-permission.umd.js'; // UMD 格式的输出文件名
+                  return 'cell-pro.umd.js'; // UMD 格式的输出文件名
                 }
                 return 'index.js'; // ESM 格式的输出文件名
             },

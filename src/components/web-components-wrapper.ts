@@ -7,7 +7,7 @@
 import { defineCustomElement, h } from 'vue'
 import type { Component } from 'vue'
 
-// Web Components 包装器，确保 Ant Design 组件正确渲染
+// Web Components 包装器，确保完全禁用 Shadow DOM
 export function createWebComponentWrapper(
     component: Component,
     tagName: string,
@@ -21,30 +21,53 @@ export function createWebComponentWrapper(
         prefixCls = 'cell-pro'
     } = options
 
-    // 创建自定义元素
-    const CustomElement = defineCustomElement({
-        name: tagName,
-        shadowRoot: false, // 禁用 Shadow DOM
-        styles: [], // 不使用样式注入
-        // 使用 render 函数确保组件正确渲染
-        render() {
-            // 传递所有属性和插槽
-            return h(component, {
-                ...this.$attrs,
-                // 确保样式前缀正确传递
-                prefixCls: this.prefixCls || prefixCls
-            }, this.$slots)
-        },
-        // 定义组件属性
-        props: {
-            prefixCls: {
-                type: String,
-                default: prefixCls
-            }
-        }
-    })
+    // 创建自定义元素类
+    // class CustomElement extends HTMLElement {
+    //     private _component: any = null
 
-    return CustomElement
+    //     constructor() {
+    //         super()
+    //         // 确保不使用 Shadow DOM
+    //         this.attachShadow = () => null as any
+    //     }
+
+    //     connectedCallback() {
+    //         // 创建组件实例
+    //         this._component = h(component, {
+    //             ...this.getAttributeNames().reduce((attrs, name) => {
+    //                 attrs[name] = this.getAttribute(name)
+    //                 return attrs
+    //             }, {} as Record<string, any>),
+    //             prefixCls: this.getAttribute('prefix-cls') || prefixCls
+    //         })
+
+    //         // 直接渲染到 Light DOM
+    //         this.appendChild(this._component.el || document.createElement('div'))
+    //     }
+
+    //     disconnectedCallback() {
+    //         if (this._component) {
+    //             this._component = null
+    //         }
+    //     }
+
+    //     // 重写 shadowRoot 属性，确保返回 null
+    //     get shadowRoot() {
+    //         return null
+    //     }
+    // }
+
+    // 定义自定义元素
+    // customElements.define(tagName, CustomElement)
+    customElements.define(
+        tagName,
+        defineCustomElement({
+            component,
+            shadowRoot: false,
+            styles: [],
+        }),
+    );
+    // return CustomElement
 }
 
 // 注册 Web Components 的辅助函数
@@ -63,10 +86,8 @@ export function registerWebComponent(
         return
     }
 
-    const CustomElement = createWebComponentWrapper(component, tagName, options)
-    customElements.define(tagName, CustomElement)
-    
-    return CustomElement
+    createWebComponentWrapper(component, tagName, options)
+    // return CustomElement
 }
 
 // 批量注册多个 Web Components

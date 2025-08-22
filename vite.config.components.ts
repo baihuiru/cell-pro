@@ -1,3 +1,9 @@
+/*
+ * @Author: huirubai
+ * @Date: 2025-08-20 17:24:23
+ * @Last Modified: huirubai
+ * @Last Modified time: Do not edit
+ */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
@@ -6,7 +12,15 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
+        vue({
+            // Vue 插件配置，禁用 Shadow DOM 模式
+            template: {
+                compilerOptions: {
+                    // 禁用 Shadow DOM 相关特性
+                    isCustomElement: (tag) => tag.startsWith('cell-') || tag.startsWith('share-') || tag.startsWith('help-') || tag.startsWith('cell-pro-')
+                }
+            }
+        }),
         cssInjectedByJsPlugin({
             // 自动收集所有样式
             jsAssetsFilterFunction: (cssAsset) => true,

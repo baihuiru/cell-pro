@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试 Shadow DOM 是否被禁用</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #1890ff;
+        }
+        .component-demo {
+            margin: 16px 0;
+            padding: 16px;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+        .status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        .status.success {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            color: #52c41a;
+        }
+        .status.error {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            color: #ff4d4f;
+        }
+        .status.info {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            color: #1890ff;
+        }
+        .status.warning {
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+            color: #faad14;
+        }
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        .shadow-dom-info {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            padding: 16px;
+            border-radius: 6px;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Shadow DOM 禁用测试</h1>
+        <p>这个页面专门用于测试你的 Vue Web Components 是否完全禁用了 Shadow DOM</p>
+
+        <div class="shadow-dom-info">
+            <h3>📚 关于 Shadow DOM</h3>
+            <p><strong>Shadow DOM</strong> 是 Web Components 的核心特性，它提供了一个封装的 DOM 子树，与主文档的 DOM 树分离。</p>
+            <p>当你看到 <code>#shadow-root (open)</code> 时，说明组件使用了 Shadow DOM。如果完全禁用，你应该看不到这个节点。</p>
+        </div>
+
+        <div class="test-section">
+            <h3>1. ShareButton 组件测试</h3>
+            <div class="component-demo">
+                <share-button text="https://example.com" button-text="复制链接"></share-button>
+            </div>
+            <div class="status info">
+                预期：应该显示一个 Ant Design 样式的按钮，<strong>不应该有 shadow-root</strong>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. HelpLink 组件测试</h3>
+            <div class="component-demo">
+                <help-link text="帮助文档" href="https://docs.example.com" icon-type="book"></help-link>
+            </div>
+            <div class="status info">
+                预期：应该显示一个帮助链接，<strong>不应该有 shadow-root</strong>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. Shadow DOM 状态检查</h3>
+            <div id="shadow-dom-check"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 开发者工具检查步骤</h3>
+            <ol>
+                <li>右键点击上面的组件，选择"检查元素"</li>
+                <li>在 Elements 面板中查看组件结构</li>
+                <li><strong>如果看到 <code>#shadow-root (open)</code>，说明 Shadow DOM 没有被禁用</strong></li>
+                <li><strong>如果没有看到 shadow-root，说明 Shadow DOM 被成功禁用</strong></li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>5. 样式测试</h3>
+            <p>测试外部样式是否能影响组件内部：</p>
+            <div class="code-block">
+/* 在控制台执行这段 CSS 来测试样式是否生效 */
+share-button button {
+    background-color: red !important;
+    color: white !important;
+}
+
+help-link a {
+    color: purple !important;
+    font-weight: bold !important;
+}
+            </div>
+            <div class="status info">
+                如果 Shadow DOM 被禁用，外部样式应该能影响组件内部。如果使用了 Shadow DOM，外部样式将无法穿透。
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入构建后的组件库 -->
+    <script type="module">
+        // 动态导入组件库
+        import('http://localhost:5173/dist/cell-pro.es.js')
+            .then(({ registerWebComponents }) => {
+                console.log('✅ 组件库加载成功');
+                
+                // 注册 Web Components
+                registerWebComponents();
+                console.log('✅ Web Components 注册成功');
+                
+                // 检查组件是否正确注册
+                setTimeout(() => {
+                    const shadowDomCheck = document.getElementById('shadow-dom-check');
+                    
+                    // 检查组件注册状态
+                    if (customElements.get('share-button')) {
+                        shadowDomCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ ShareButton 组件注册成功
+                            </div>
+                        `;
+                    } else {
+                        shadowDomCheck.innerHTML += `
+                            <div class="status error">
+                                ❌ ShareButton 组件注册失败
+                            </div>
+                        `;
+                    }
+                    
+                    if (customElements.get('help-link')) {
+                        shadowDomCheck.innerHTML += `
+                            <div class="status success">
+                                ✅ HelpLink 组件注册成功
+                            </div>
+                        `;
+                    } else {
+                        shadowDomCheck.innerHTML += `
+                            <div class="status error">
+                                ❌ HelpLink 组件注册失败
+                            </div>
+                        `;
+                    }
+                    
+                    // 检查 Shadow DOM 状态
+                    const shareButton = document.querySelector('share-button');
+                    const helpLink = document.querySelector('help-link');
+                    
+                    if (shareButton) {
+                        if (shareButton.shadowRoot) {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status error">
+                                    ❌ ShareButton 仍然使用 Shadow DOM！
+                                    <br>shadowRoot 类型: ${shareButton.shadowRoot.mode}
+                                </div>
+                            `;
+                        } else {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status success">
+                                    ✅ ShareButton Shadow DOM 被成功禁用
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    if (helpLink) {
+                        if (helpLink.shadowRoot) {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status error">
+                                    ❌ HelpLink 仍然使用 Shadow DOM！
+                                    <br>shadowRoot 类型: ${helpLink.shadowRoot.mode}
+                                </div>
+                            `;
+                        } else {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status success">
+                                    ✅ HelpLink Shadow DOM 被成功禁用
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    // 检查组件内部结构
+                    if (shareButton && !shareButton.shadowRoot) {
+                        const button = shareButton.querySelector('button');
+                        if (button) {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status success">
+                                    ✅ ShareButton 内部按钮可以被外部选择器访问
+                                </div>
+                            `;
+                        } else {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status warning">
+                                    ⚠️ ShareButton 内部按钮无法被外部选择器访问
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    if (helpLink && !helpLink.shadowRoot) {
+                        const link = helpLink.querySelector('a');
+                        if (link) {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status success">
+                                    ✅ HelpLink 内部链接可以被外部选择器访问
+                                </div>
+                            `;
+                        } else {
+                            shadowDomCheck.innerHTML += `
+                                <div class="status warning">
+                                    ⚠️ HelpLink 内部链接无法被外部选择器访问
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('❌ 组件库加载失败:', error);
+                document.getElementById('shadow-dom-check').innerHTML = `
+                    <div class="status error">
+                        ❌ 组件库加载失败: ${error.message}
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>
